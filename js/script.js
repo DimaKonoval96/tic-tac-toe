@@ -14,6 +14,7 @@ const gameBoard = (() => {
   // Update board array
   const updateBoard = (index, value) => {
     let [row, column] = index.split("");
+    if (board[row][column] !== "") return;
     board[row][column] = value;
   };
 
