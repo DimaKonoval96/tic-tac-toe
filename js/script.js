@@ -26,14 +26,33 @@ const gameBoard = (() => {
     const res1 = board[row].every((item) => item === value);
 
     let count = 0;
-    for (let i = 0; i < 3; i++) {
+    let count2 = 0;
+    let count3 = 0;
+
+    for (let i = 0; i < board[0].length; i++) {
       if (board[i][column] === value) {
         count++;
       }
     }
 
-    const res2 = count == 3 ? true : false;
-    return res1 || res2;
+    for (let i = 0; i < board[0].length; i++) {
+      if (board[i][i] == value) {
+        count2++;
+      }
+    }
+
+    for (let i = 0; i < board[0].length; i++) {
+      for (let j = board[0].length - 1; j >= 0; j--) {
+        if (board[i][j] == value) {
+          count3++;
+        }
+      }
+    }
+
+    const res2 = count == board[0].length ? true : false;
+    const res3 = count2 == board[0].length ? true : false;
+    const res4 = count3 == board[0].length ? true : false;
+    return res1 || res2 || res3 || res4;
   };
 
   return { getBoard, updateBoard };
