@@ -14,11 +14,11 @@ const gameBoard = (() => {
   // Update board array
   const updateBoard = (index, value) => {
     let [row, column] = index.split("");
-    if (board[row][column] !== "") return;
+    if (board[row][column] !== "") return false;
     currValue = value;
     board[row][column] = value;
     if (checkBoard(row, column, value) == true) {
-      console.log(true);
+      return true;
     }
   };
 
@@ -41,17 +41,17 @@ const gameBoard = (() => {
       }
     }
 
-    for (let i = 0; i < board[0].length; i++) {
-      for (let j = board[0].length - 1; j >= 0; j--) {
-        if (board[i][j] == value) {
-          count3++;
-        }
+    for (let i = 0, j = board[0].lenght - 1; i < board[0].length; i++, j--) {
+      // debugger;
+
+      if (board[i][j] == value) {
+        count3++;
       }
     }
 
-    const res2 = count == board[0].length ? true : false;
-    const res3 = count2 == board[0].length ? true : false;
-    const res4 = count3 == board[0].length ? true : false;
+    const res2 = count === board[0].length ? true : false;
+    const res3 = count2 === board[0].length ? true : false;
+    const res4 = count3 === board[0].length ? true : false;
     return res1 || res2 || res3 || res4;
   };
 
@@ -71,9 +71,16 @@ const gameController = (() => {
   let currPlayer = player1;
   const dGameBoard = document.querySelector("#GameBoard");
   const dCells = document.querySelectorAll(".cell");
+
   dGameBoard.addEventListener("click", (ev) => {
     const index = ev.target.dataset.cell;
-    gameBoard.updateBoard(index, currPlayer.value);
+    const gameResult = gameBoard.updateBoard(index, currPlayer.value);
+    if (gameResult) {
+      console.log(`Winner is ${currPlayer.name}`);
+    }
+    if (gameResult == false) {
+      return;
+    }
     currPlayer = currPlayer == player1 ? player2 : player1;
     displayBoard();
   });
