@@ -11,17 +11,24 @@ const gameBoard = (() => {
     return board;
   };
 
-  // Update board array
-  const updateBoard = (index, value) => {
-    let [row, column] = index.split("");
-    if (board[row][column] !== "") return false;
-    currValue = value;
-    board[row][column] = value;
-    if (checkBoard(row, column, value) == true) {
-      return true;
+  const clear = () => {
+    for (let i = 0; i < board.length; i++) {
+      for (let j = 0; j < board[i].length; j++) {
+        board[i][j] = "";
+      }
     }
   };
 
+  // Update board array
+  const updateBoard = (index, value) => {
+    let [row, column] = index.split("");
+    if (board[row][column] !== "") return "NONE";
+    currValue = value;
+    board[row][column] = value;
+    return checkBoard(row, column, value);
+  };
+
+  // Checks if we have a winner
   const checkBoard = (row, column, value) => {
     const res1 = board[row].every((item) => item === value);
 
@@ -41,21 +48,29 @@ const gameBoard = (() => {
       }
     }
 
-    for (let i = 0, j = board[0].lenght - 1; i < board[0].length; i++, j--) {
-      // debugger;
-
+    for (let i = 0, j = board[0].length - 1; i < board[0].length; i++, j--) {
       if (board[i][j] == value) {
         count3++;
       }
     }
 
+    const isTie = board.every((arr) => {
+      let tmp = arr.every((item) => item != "");
+      return tmp == true;
+    });
+
     const res2 = count === board[0].length ? true : false;
     const res3 = count2 === board[0].length ? true : false;
     const res4 = count3 === board[0].length ? true : false;
-    return res1 || res2 || res3 || res4;
+    if (res1 || res2 || res3 || res4) {
+      return "WIN";
+    }
+    if (isTie) {
+      return "TIE";
+    }
   };
 
-  return { getBoard, updateBoard };
+  return { getBoard, updateBoard, clear };
 })();
 
 // The players factory
@@ -75,14 +90,21 @@ const gameController = (() => {
   dGameBoard.addEventListener("click", (ev) => {
     const index = ev.target.dataset.cell;
     const gameResult = gameBoard.updateBoard(index, currPlayer.value);
-    if (gameResult) {
-      console.log(`Winner is ${currPlayer.name}`);
+
+    switch (gameResult) {
+      case "WIN":
+        console.log(`Winner is ${currPlayer.name}`);
+        break;
+
+      case "TIE":
+        console.log("TIE");
+        break;
+      case "NONE":
+        return;
     }
-    if (gameResult == false) {
-      return;
-    }
-    currPlayer = currPlayer == player1 ? player2 : player1;
+
     displayBoard();
+    currPlayer = currPlayer == player1 ? player2 : player1;
   });
 
   const displayBoard = () => {
