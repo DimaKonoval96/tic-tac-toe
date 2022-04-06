@@ -2,8 +2,8 @@
 const gameBoard = (() => {
   const board = [
     ["", "", ""],
-    ["", "o", ""],
-    ["", "o", ""],
+    ["", "", ""],
+    ["", "", ""],
   ];
 
   // Return board array
@@ -15,7 +15,25 @@ const gameBoard = (() => {
   const updateBoard = (index, value) => {
     let [row, column] = index.split("");
     if (board[row][column] !== "") return;
+    currValue = value;
     board[row][column] = value;
+    if (checkBoard(row, column, value) == true) {
+      console.log(true);
+    }
+  };
+
+  const checkBoard = (row, column, value) => {
+    const res1 = board[row].every((item) => item === value);
+
+    let count = 0;
+    for (let i = 0; i < 3; i++) {
+      if (board[i][column] === value) {
+        count++;
+      }
+    }
+
+    const res2 = count == 3 ? true : false;
+    return res1 || res2;
   };
 
   return { getBoard, updateBoard };
@@ -36,7 +54,6 @@ const gameController = (() => {
   const dCells = document.querySelectorAll(".cell");
   dGameBoard.addEventListener("click", (ev) => {
     const index = ev.target.dataset.cell;
-    console.log(index);
     gameBoard.updateBoard(index, currPlayer.value);
     currPlayer = currPlayer == player1 ? player2 : player1;
     displayBoard();
@@ -48,7 +65,6 @@ const gameController = (() => {
       let column = cell.dataset.cell[1];
       cell.textContent = gameBoard.getBoard()[row][column];
     });
-    console.log(player1, player2);
   };
   return { displayBoard };
 })();
