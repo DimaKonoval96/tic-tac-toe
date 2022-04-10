@@ -83,6 +83,15 @@ const gameController = (() => {
   const player1 = players("Player 1", "x");
   const player2 = players("Player 2", "o");
 
+  const modal = document.querySelector(".modal");
+  const newGameBtn = document.querySelector(".new_game");
+
+  newGameBtn.addEventListener("click", () => {
+    modal.classList.add("hidden");
+    gameBoard.clear();
+    displayBoard();
+  });
+
   let currPlayer = player1;
   const dGameBoard = document.querySelector("#GameBoard");
   const dCells = document.querySelectorAll(".cell");
@@ -108,7 +117,6 @@ const gameController = (() => {
   });
 
   const displayGameEnd = (msg) => {
-    const modal = document.querySelector(".modal");
     const resultMsg = document.querySelector("#result_msg");
     modal.classList.remove("hidden");
     resultMsg.textContent = msg;
