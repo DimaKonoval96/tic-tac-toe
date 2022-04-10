@@ -93,11 +93,11 @@ const gameController = (() => {
 
     switch (gameResult) {
       case "WIN":
-        console.log(`Winner is ${currPlayer.name}`);
+        displayGameEnd(`${currPlayer.name} is the Winner`);
         break;
 
       case "TIE":
-        console.log("TIE");
+        displayGameEnd("TIE");
         break;
       case "NONE":
         return;
@@ -106,6 +106,13 @@ const gameController = (() => {
     displayBoard();
     currPlayer = currPlayer == player1 ? player2 : player1;
   });
+
+  const displayGameEnd = (msg) => {
+    const modal = document.querySelector(".modal");
+    const resultMsg = document.querySelector("#result_msg");
+    modal.classList.remove("hidden");
+    resultMsg.textContent = msg;
+  };
 
   const displayBoard = () => {
     dCells.forEach((cell) => {
