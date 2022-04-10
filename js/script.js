@@ -90,6 +90,7 @@ const gameController = (() => {
     modal.classList.add("hidden");
     gameBoard.clear();
     displayBoard();
+    currPlayer = player1;
   });
 
   let currPlayer = player1;
