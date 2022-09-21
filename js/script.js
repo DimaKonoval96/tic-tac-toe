@@ -85,6 +85,27 @@ const gameController = (() => {
 
   const modal = document.querySelector(".modal");
   const newGameBtn = document.querySelector(".new_game");
+  const player1Select = document.querySelector("#player1Select");
+  const player2Select = document.querySelector("#player2Select");
+  const player1Name = document.querySelector("#player1Name");
+  const player2Name = document.querySelector("#player2Name");
+  const startBtn = document.querySelector("#startBtn");
+
+  player1Select.addEventListener("change", (ev) => {
+    if (ev.target.value == "Computer") {
+      player1Name.classList.add("hidden");
+    } else {
+      player1Name.classList.remove("hidden");
+    }
+  });
+
+  player2Select.addEventListener("change", (ev) => {
+    if (ev.target.value == "Computer") {
+      player2Name.classList.add("hidden");
+    } else {
+      player2Name.classList.remove("hidden");
+    }
+  });
 
   newGameBtn.addEventListener("click", () => {
     modal.classList.add("hidden");

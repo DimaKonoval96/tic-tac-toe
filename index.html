@@ -22,11 +22,41 @@
         <div class="cell bd-bottom bd-right" data-cell="22"></div>
       </div>
     </div>
-
-    <div class="modal hidden">
+    <div class="modal hidden" id="newGameModal">
       <div class="modal_content">
         <h2 id="result_msg"></h2>
         <button class="btn-dark new_game">New Game</button>
+      </div>
+    </div>
+    <div class="modal" id="playersModal">
+      <div class="modal_content">
+        <div class="flexbox">
+          <div class="playerContent">
+            <select name="player1" id="player1Select" class="playerSelect">
+              <option value="Player">Player</option>
+              <option value="Computer">Computer</option>
+            </select>
+            <input
+              type="text"
+              id="player1Name"
+              value="Player 1"
+              name="player1"
+            />
+          </div>
+          <div class="playerContent">
+            <select name="player2" id="player2Select" class="playerSelect">
+              <option value="Player">Player</option>
+              <option value="Computer">Computer</option>
+            </select>
+            <input
+              type="text"
+              id="player2Name"
+              value="Player 2"
+              name="player2"
+            />
+          </div>
+        </div>
+        <button class="btn btn-dark" id="startBtn">Start</button>
       </div>
     </div>
     <script src="js/script.js"></script>

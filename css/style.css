@@ -2,6 +2,9 @@
 body {
   font-family:sans-serif;
 }
+.flexbox {
+  display: flex;
+}
 .cell {
   border: 2px solid black;
   font-size: 8rem;
@@ -63,6 +66,15 @@ h1{
   flex-direction: column;
 }
 
+.btn {
+  padding: 10px 20px;
+  background: white;
+  color: black;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 10px;
+}
 .btn-dark {
   padding: 10px 20px;
   background: black;
@@ -76,8 +88,14 @@ h2{
   margin-bottom: 40px;
 }
 
-.new_game{
+.playerContent {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
 
+.playerSelect {
+  margin-bottom: 10px;
 }
 
 .hidden{
