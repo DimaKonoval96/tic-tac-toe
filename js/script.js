@@ -90,6 +90,7 @@ const gameController = (() => {
   const player1Name = document.querySelector("#player1Name");
   const player2Name = document.querySelector("#player2Name");
   const startBtn = document.querySelector("#startBtn");
+  const playersModal = document.querySelector("#playersModal");
 
   player1Select.addEventListener("change", (ev) => {
     if (ev.target.value == "Computer") {
@@ -112,6 +113,13 @@ const gameController = (() => {
     gameBoard.clear();
     displayBoard();
     currPlayer = player1;
+    playersModal.classList.remove("hidden");
+  });
+
+  startBtn.addEventListener("click", (ev) => {
+    player1.name = player1Name.value;
+    player2.name = player2Name.value;
+    playersModal.classList.add("hidden");
   });
 
   let currPlayer = player1;
