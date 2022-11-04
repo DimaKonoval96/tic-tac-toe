@@ -18,6 +18,10 @@ const gameBoard = (() => {
       }
     }
   };
+  
+  const ai = () => {
+    
+  }
 
   // Update board array
   const updateBoard = (index, value) => {
