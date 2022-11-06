@@ -133,6 +133,7 @@ const gameController = (() => {
     }
   });
 
+  // Restart the game
   newGameBtn.addEventListener("click", () => {
     modal.classList.add("hidden");
     gameBoard.clear();
@@ -144,6 +145,12 @@ const gameController = (() => {
   startBtn.addEventListener("click", (ev) => {
     player1.name = player1Name.value;
     player2.name = player2Name.value;
+    if (player1.isAI) {
+      const randomIndex = gameBoard.getRandomIndex();
+      updateBoard(randomIndex);
+      displayBoard();
+      changePlayer();
+    }
     playersModal.classList.add("hidden");
   });
 
