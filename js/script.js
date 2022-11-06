@@ -18,10 +18,25 @@ const gameBoard = (() => {
       }
     }
   };
-  
-  const ai = () => {
-    
-  }
+
+  const getRandomInt = (max) => {
+    return Math.floor(Math.random() * max);
+  };
+
+  const getRandomIndex = () => {
+    const board = getBoard();
+    const boardEmptyIndexes = [];
+    for (let i = 0; i < board.length; i++) {
+      for (let j = 0; j < board[0].length; j++) {
+        if (board[i][j] == "") {
+          boardEmptyIndexes.push(`${i}${j}`);
+        }
+      }
+    }
+    let randomIndex = getRandomInt(boardEmptyIndexes.length);
+
+    return boardEmptyIndexes[randomIndex];
+  };
 
   // Update board array
   const updateBoard = (index, value) => {
@@ -74,7 +89,7 @@ const gameBoard = (() => {
     }
   };
 
-  return { getBoard, updateBoard, clear };
+  return { getBoard, updateBoard, clear, getRandomIndex };
 })();
 
 // The players factory
@@ -146,8 +161,10 @@ const gameController = (() => {
         return;
     }
 
-    displayBoard();
+    const randomIndex = gameBoard.getRandomIndex();
     currPlayer = currPlayer == player1 ? player2 : player1;
+    gameBoard.updateBoard(randomIndex, currPlayer.value);
+    displayBoard();
   });
 
   const displayGameEnd = (msg) => {
