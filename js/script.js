@@ -93,14 +93,14 @@ const gameBoard = (() => {
 })();
 
 // The players factory
-const players = (name, value) => {
-  return { name, value };
+const players = (name, value, isAI) => {
+  return { name, value, isAI };
 };
 
 // Controller module of the game flow
 const gameController = (() => {
-  const player1 = players("Player 1", "x");
-  const player2 = players("Player 2", "o");
+  const player1 = players("Player 1", "x", (isAI = false));
+  const player2 = players("Player 2", "o", (isAI = false));
 
   const modal = document.querySelector(".modal");
   const newGameBtn = document.querySelector(".new_game");
@@ -113,16 +113,22 @@ const gameController = (() => {
 
   player1Select.addEventListener("change", (ev) => {
     if (ev.target.value == "Computer") {
+      player1.isAI = true;
       player1Name.classList.add("hidden");
     } else {
+      player1.isAI = false;
       player1Name.classList.remove("hidden");
     }
   });
 
   player2Select.addEventListener("change", (ev) => {
     if (ev.target.value == "Computer") {
+      player2.isAI = true;
+      console.log(player2);
       player2Name.classList.add("hidden");
     } else {
+      player2.isAI = false;
+      console.log(player2);
       player2Name.classList.remove("hidden");
     }
   });
@@ -145,10 +151,8 @@ const gameController = (() => {
   const dGameBoard = document.querySelector("#GameBoard");
   const dCells = document.querySelectorAll(".cell");
 
-  dGameBoard.addEventListener("click", (ev) => {
-    const index = ev.target.dataset.cell;
-    const gameResult = gameBoard.updateBoard(index, currPlayer.value);
-
+  const updateBoard = (index) => {
+    let gameResult = gameBoard.updateBoard(index, currPlayer.value);
     switch (gameResult) {
       case "WIN":
         displayGameEnd(`${currPlayer.name} is the Winner`);
@@ -160,11 +164,24 @@ const gameController = (() => {
       case "NONE":
         return;
     }
+  };
 
-    const randomIndex = gameBoard.getRandomIndex();
+  const changePlayer = () => {
     currPlayer = currPlayer == player1 ? player2 : player1;
-    gameBoard.updateBoard(randomIndex, currPlayer.value);
+  };
+  dGameBoard.addEventListener("click", (ev) => {
+    const index = ev.target.dataset.cell;
+    updateBoard(index);
     displayBoard();
+
+    changePlayer();
+
+    if (currPlayer.isAI) {
+      const randomIndex = gameBoard.getRandomIndex();
+      updateBoard(randomIndex);
+      displayBoard();
+      changePlayer();
+    }
   });
 
   const displayGameEnd = (msg) => {
